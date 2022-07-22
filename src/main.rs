@@ -2,7 +2,7 @@ mod color_names;
 mod convert;
 mod display;
 
-use convert::convert;
+use convert::convert_hex;
 
 fn main() {
     let mut args: Vec<String> = std::env::args().collect();
@@ -11,7 +11,7 @@ fn main() {
         _ => {
             args.remove(0);
             for arg in args {
-                convert(arg);
+                convert_hex(arg);
             }
         }
     }

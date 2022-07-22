@@ -1,6 +1,6 @@
 use super::display::*;
 
-pub fn convert(arg: String) {
+pub fn convert_hex(arg: String) {
     let mut temp = "".to_string();
     let mut v = vec![];
     for (i, c) in arg.chars().enumerate() {
