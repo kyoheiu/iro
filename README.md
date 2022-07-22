@@ -16,7 +16,9 @@ iro [hex color code(s)]
 ## Example
 
 sample-1
+
 ![sample-1](screenshots/iro_sample1.png)
 
 sample-2
+
 ![sample-2](screenshots/iro_sample2.png)
