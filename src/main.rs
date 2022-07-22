@@ -12,6 +12,7 @@ fn main() {
             args.remove(0);
             for arg in args {
                 convert_hex(arg);
+                println!();
             }
         }
     }
