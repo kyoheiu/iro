@@ -1,6 +1,6 @@
 # iro -色-
 
-Read hex color code(s) and print
+Read hex color code(s) and print the following:
 
 - code itself
 - color name (if exists, according to [jonathantneal/color-names](https://github.com/jonathantneal/color-names))
@@ -10,7 +10,7 @@ Read hex color code(s) and print
 ## Usage
 
 ```
-iro [hex color code(s)]
+iro <hex color code(s)>
 ```
 
 ## Example
