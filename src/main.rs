@@ -54,7 +54,13 @@ fn main() -> Result<(), std::io::Error> {
                     eprintln!("Error: Invalid inputs.");
                 }
             } else {
-                eprintln!("Error: Invalid inputs.");
+                args.remove(0);
+                for arg in args {
+                    match Color::from_hex(&arg) {
+                        Ok(color) => color.print_color(),
+                        Err(e) => eprintln!("{}", e),
+                    }
+                }
             }
         }
     }

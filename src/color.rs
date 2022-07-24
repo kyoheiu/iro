@@ -27,7 +27,7 @@ impl Color {
         }
 
         let _strip = hex.to_string().strip_prefix('#');
-        let hex = hex.to_ascii_lowercase();
+        let hex = hex.chars().take(6).collect::<String>().to_ascii_lowercase();
         let name = search_color_name(&hex);
 
         let mut rgb = vec![];
