@@ -2,14 +2,14 @@
    
 Hex color code or RGB => color code, RGB, HSL, color name(if exists, according to [jonathantneal/color-names](https://github.com/jonathantneal/color-names)).
 
-## Usage:
-    `iro <hex color code>`
-    `iro -r(--rgb) <r g b>`
+## Usage
+`iro <hex color code>`
+`iro -r(--rgb) <r g b>`
 The color code do not need '#' at the beginning.
 
-ex:
-    `iro ffffff` or `iro 123456 333333`
-    `iro -r 25 34 187` or `iro --rgb 0 0 255 120 120 240`
+ex:  
+`iro ffffff` or `iro 123456 333333`  
+`iro -r 25 34 187` or `iro --rgb 0 0 255 120 120 240`
 
 ## Example
 
