@@ -4,14 +4,16 @@ mod color_names;
 use color::*;
 
 const HELP: &str = "
+Hex color code or RGB => color code, RGB, HSL, color name(if exists).
+
 Usage:
-    `iro <hex color code(s)>`
-    `iro -r(-rgb) <r g b>`
-The color code do not need '#' at the beginning.
+    `iro <hex color code>`
+    `iro -r(--rgb) <r g b>`
+    The color code do not need '#' at the beginning.
 
 ex:
     `iro ffffff` or `iro 123456 333333`
-    `iro -r 25 34 187`
+    `iro -r 25 34 187` or `iro --rgb 0 0 255 120 120 240`
 ";
 
 fn main() -> Result<(), std::io::Error> {
