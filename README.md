@@ -3,8 +3,8 @@
 Hex color code or RGB => color code, RGB, HSL, color name(if exists, according to [jonathantneal/color-names](https://github.com/jonathantneal/color-names)).
 
 ## Usage
-`iro <hex color code>`
-`iro -r(--rgb) <r g b>`
+`iro <hex color code>`  
+`iro -r(--rgb) <r g b>`  
 The color code do not need '#' at the beginning.
 
 ex:  
