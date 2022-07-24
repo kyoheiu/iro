@@ -1,43 +1,50 @@
+use std::num::ParseIntError;
+
 use super::color_names::search_color_name;
 use colored::Colorize;
 
-pub const LEN: usize = 36;
+pub const LEN: usize = 42;
 
 pub struct Color {
-    hex: String,
-    name: Option<String>,
-    rgb: Vec<u8>,
-    hsl: [f64; 3],
+    pub hex: String,
+    pub name: Option<String>,
+    pub rgb: Vec<u8>,
+    pub hsl: [f64; 3],
 }
 
 impl Color {
-    pub fn from_hex(hex: &str) -> Self {
+    pub fn from_hex(hex: &str) -> Result<Self, ParseIntError> {
         let mut temp = "".to_string();
-        let mut v = vec![];
+        let mut rgb_v = vec![];
         for (i, c) in hex.chars().enumerate() {
             if i % 2 != 0 {
                 temp.push(c);
-                v.push(temp);
+                rgb_v.push(temp);
                 temp = "".to_string();
             } else {
                 temp.push(c);
             }
         }
 
-        let name = search_color_name(hex);
+        let _strip = hex.to_string().strip_prefix('#');
+        let hex = hex.to_ascii_lowercase();
+        let name = search_color_name(&hex);
 
-        let rgb = v
-            .iter()
-            .map(|value| u8::from_str_radix(value, 16).unwrap())
-            .collect::<Vec<u8>>();
-
+        let mut rgb = vec![];
+        for s in rgb_v {
+            let n = u8::from_str_radix(&s, 16);
+            match n {
+                Ok(x) => rgb.push(x),
+                Err(e) => return Err(e),
+            }
+        }
         let hsl = convert_to_hsl(&rgb);
-        Color {
-            hex: hex.to_string(),
+        Ok(Color {
+            hex,
             name,
             rgb,
             hsl,
-        }
+        })
     }
 
     pub fn from_rgb(r: u8, g: u8, b: u8) -> Self {
@@ -157,6 +164,7 @@ impl Color {
         self.print_rgb_ratio();
         self.print_hsl();
         self.print_background();
+        println!();
     }
 }
 

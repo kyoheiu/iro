@@ -14,28 +14,68 @@ ex:
     `iro -r 25 34 187`
 ";
 
-fn main() {
+fn main() -> Result<(), std::io::Error> {
     let mut args: Vec<String> = std::env::args().collect();
     match args.len() {
         1 => println!("{}", HELP),
-        _ => {
-            if &args[1] == "-r" || &args[1] == "--rgb" {
-                let mut rgb = vec![];
-                for n in &args[2..=args.len() - 1] {
-                    let n = n.parse::<u8>().unwrap();
-                    rgb.push(n);
-                }
-                let color = Color::from_rgb(rgb[0], rgb[1], rgb[2]);
-                color.print_color();
-                println!();
-            } else {
-                args.remove(0);
-                for arg in args {
-                    let color = Color::from_hex(&arg);
-                    color.print_color();
-                    println!();
+        2 => {
+            args.remove(0);
+            for arg in args {
+                match Color::from_hex(&arg) {
+                    Ok(color) => color.print_color(),
+                    Err(e) => eprintln!("{}", e),
                 }
             }
         }
+        _ => {
+            if &args[1] == "-r" || &args[1] == "--rgb" {
+                let v = &args[2..args.len()];
+                let times = v.len() % 3;
+                if times == 0 {
+                    let mut rgb = vec![];
+                    for i in 0..(v.len() / 3) {
+                        for n in &v[((i * 3)..=2 + (i * 3))] {
+                            let parsed = n.parse::<u8>();
+                            match parsed {
+                                Ok(x) => rgb.push(x),
+                                Err(_) => {
+                                    eprintln!("Error: Invalid input => {}", n);
+                                    return Ok(());
+                                }
+                            }
+                        }
+                        let color = Color::from_rgb(rgb[0], rgb[1], rgb[2]);
+                        color.print_color();
+                        rgb = vec![];
+                    }
+                } else {
+                    eprintln!("Error: Invalid inputs.");
+                }
+            } else {
+                eprintln!("Error: Invalid inputs.");
+            }
+        }
+    }
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_from_hex() {
+        let color = Color::from_hex("7CB9E8").unwrap();
+        assert_eq!(color.hex, "7cb9e8".to_string());
+        assert_eq!(color.name, Some("Aero".to_string()));
+        assert_eq!(color.rgb, vec![124, 185, 232]);
+    }
+
+    #[test]
+    fn test_from_rgb() {
+        let color = Color::from_rgb(175, 143, 44);
+        assert_eq!(color.hex, "af8f2c".to_string());
+        assert_eq!(color.name, Some("Alpine".to_string()));
+        assert_eq!(color.rgb, vec![175, 143, 44]);
     }
 }
