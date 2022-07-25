@@ -21,12 +21,13 @@ fn main() -> Result<(), std::io::Error> {
     match args.len() {
         1 => println!("{}", HELP),
         2 => {
-            args.remove(0);
-            for arg in args {
-                match Color::from_hex(&arg) {
-                    Ok(color) => color.print_color(),
-                    Err(e) => eprintln!("{}", e),
-                }
+            if args[1].len() < 6 {
+                eprintln!("Error: Too short code.");
+                return Ok(());
+            }
+            match Color::from_hex(&args[1]) {
+                Ok(color) => color.print_color(),
+                Err(e) => eprintln!("{}", e),
             }
         }
         _ => {
@@ -56,6 +57,10 @@ fn main() -> Result<(), std::io::Error> {
             } else {
                 args.remove(0);
                 for arg in args {
+                    if arg.len() < 6 {
+                        eprintln!("Error: Too short code.");
+                        return Ok(());
+                    }
                     match Color::from_hex(&arg) {
                         Ok(color) => color.print_color(),
                         Err(e) => eprintln!("{}", e),
