@@ -1,6 +1,6 @@
 # iro -色-
    
-Hex color code or RGB => color code, RGB, HSL, color name(if exists, according to [jonathantneal/color-names](https://github.com/jonathantneal/color-names)).
+A CLI tool to convert the hex color code or RGB to color code, RGB, HSL, color name(if exists, according to [jonathantneal/color-names](https://github.com/jonathantneal/color-names)).
 
 ## Usage
 `iro <hex color code>`  
@@ -26,4 +26,4 @@ sample-3
 ![sample-3](screenshots/iro_sample3.png)
 
 ## Motivation
-When working on a GUI app launcher with [iced](https://iced.rs/), which is a really great framework, I was annoyed that it requires RGB tuples as 0.0 to 1.0. And of course there are bunch of 'online converters' of color code, but they all sucks because of the UI (they don't offer the 0-1 RGB converter, and we can't convert multiple color codes simultaneously). So, I made this CLI app.
+When working on a GUI app launcher with [iced](https://iced.rs/), which is a really great framework, I was annoyed that it requires RGB tuples as 0.0 to 1.0. And of course there are a bunch of 'online converters' of the color code, but they do not work for me effectively because of the UI (they don't offer the 0-1 RGB converter, and we can't convert multiple color codes simultaneously). This is why I made this CLI app.
