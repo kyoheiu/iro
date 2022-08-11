@@ -42,13 +42,17 @@ fn main() -> Result<(), std::io::Error> {
                             match parsed {
                                 Ok(x) => rgb.push(x),
                                 Err(_) => {
-                                    eprintln!("Error: Invalid input => {}", n);
+                                    eprintln!("Error: {} => Invalid input.", n);
                                     return Ok(());
                                 }
                             }
                         }
-                        let color = Color::from_rgb(rgb[0], rgb[1], rgb[2]);
-                        color.print_color();
+                        if rgb.len() == 3 {
+                            let color = Color::from_rgb(rgb[0], rgb[1], rgb[2]);
+                            color.print_color();
+                        } else {
+                            eprintln!("Error: Invalid input.");
+                        }
                         rgb = vec![];
                     }
                 } else {
@@ -58,8 +62,8 @@ fn main() -> Result<(), std::io::Error> {
                 args.remove(0);
                 for arg in args {
                     if arg.len() < 6 {
-                        eprintln!("Error: Too short code.");
-                        return Ok(());
+                        eprintln!("Error: {} => Too short.", arg);
+                        continue;
                     }
                     match Color::from_hex(&arg) {
                         Ok(color) => color.print_color(),
