@@ -32,5 +32,9 @@ sample-4
 
 ![sample-4](screenshots/iro_sample4.png)
 
+sample-5
+
+![sample-5](screenshots/iro_sample5.png)
+
 ## Motivation
 When working on a GUI app launcher with [iced](https://iced.rs/), which is a really great framework, I was annoyed that it requires RGB tuples as 0.0 to 1.0. And of course there are a bunch of 'online converters' of the color code, but they do not work for me effectively because of the UI (they don't offer the 0-1 RGB converter, and we can't convert multiple color codes simultaneously). This is why I made this CLI app.
