@@ -1,7 +1,11 @@
 mod color;
 mod color_names;
+mod errors;
 
 use color::*;
+use log::debug;
+
+use crate::color_names::search_names;
 
 const HELP: &str = "
 Hex color code or RGB => color code, RGB, HSL, color name(if exists).
@@ -17,6 +21,8 @@ ex:
 ";
 
 fn main() -> Result<(), std::io::Error> {
+    env_logger::init();
+
     let mut args: Vec<String> = std::env::args().collect();
     match args.len() {
         1 => println!("{}", HELP),
@@ -27,12 +33,26 @@ fn main() -> Result<(), std::io::Error> {
             }
             match Color::from_hex(&args[1]) {
                 Ok(color) => color.print_color(),
-                Err(e) => eprintln!("{}", e),
+                Err(e) => eprintln!("{:#?}", e),
             }
         }
         _ => {
-            if &args[1] == "-r" || &args[1] == "--rgb" {
+            if &args[1] == "-s" || &args[1] == "--search" {
+                let query = &args[2..args.len()];
+                let names = search_names(query.to_vec());
+                debug!("{:#?}", names);
+                if names.is_empty() {
+                    println!("No such color name.");
+                } else {
+                    for name in names {
+                        if let Ok(color) = Color::from_name(name.to_string()) {
+                            color.print_color();
+                        }
+                    }
+                }
+            } else if &args[1] == "-r" || &args[1] == "--rgb" {
                 let v = &args[2..args.len()];
+
                 let times = v.len() % 3;
                 if times == 0 {
                     let mut rgb = vec![];
@@ -67,7 +87,7 @@ fn main() -> Result<(), std::io::Error> {
                     }
                     match Color::from_hex(&arg) {
                         Ok(color) => color.print_color(),
-                        Err(e) => eprintln!("{}", e),
+                        Err(e) => eprintln!("{:#?}", e),
                     }
                 }
             }
