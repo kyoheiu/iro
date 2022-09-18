@@ -1,6 +1,7 @@
-use std::num::ParseIntError;
-
-use super::color_names::search_color_name;
+use crate::{
+    color_names::{search_color_code, search_color_name},
+    errors::IroError,
+};
 use colored::Colorize;
 
 pub const LEN: usize = 42;
@@ -13,7 +14,15 @@ pub struct Color {
 }
 
 impl Color {
-    pub fn from_hex(hex: &str) -> Result<Self, ParseIntError> {
+    pub fn from_name(name: String) -> Result<Self, IroError> {
+        if let Some(code) = search_color_code(&name) {
+            Color::from_hex(&code)
+        } else {
+            Err(IroError("No such color name.".to_string()))
+        }
+    }
+
+    pub fn from_hex(hex: &str) -> Result<Self, IroError> {
         let mut temp = "".to_string();
         let mut rgb_v = vec![];
         for (i, c) in hex.chars().enumerate() {
@@ -35,7 +44,7 @@ impl Color {
             let n = u8::from_str_radix(&s, 16);
             match n {
                 Ok(x) => rgb.push(x),
-                Err(e) => return Err(e),
+                Err(e) => return Err(IroError::from(e)),
             }
         }
         let hsl = convert_to_hsl(&rgb);
