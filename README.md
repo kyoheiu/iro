@@ -1,8 +1,9 @@
 # iro -色-
    
-A CLI tool to convert the hex color code, RGB or color name to color code, RGB, HSL, color name(if exists, according to [jonathantneal/color-names](https://github.com/jonathantneal/color-names)).
+A CLI tool to print the hex color code, RGB, HSL and color name from color code, RGB, or color name(if exists, according to [jonathantneal/color-names](https://github.com/jonathantneal/color-names)).
 
 ## Usage
+### from color code or rgb
 `iro <hex color code>`  
 `iro -r(--rgb) <r g b>`  
 The color code do not need '#' at the beginning.
@@ -11,8 +12,12 @@ ex:
 `iro ffffff` or `iro 123456 333333`  
 `iro -r 25 34 187` or `iro --rgb 0 0 255 120 120 240`
 
-You can also search color name and print it.  
+### from color name
+You can also search color name and print colors that match the queries.  
 `iro -s(--search) <query>`
+
+ex:
+`iro -s your pink`
 
 ## Example
 

@@ -1,11 +1,9 @@
 mod color;
-mod color_names;
-mod errors;
 
-use color::*;
+use colorconv::Color;
 use log::debug;
 
-use crate::color_names::search_names;
+use crate::color::print_color;
 
 const HELP: &str = "
 Hex color code or RGB => color code, RGB, HSL, color name(if exists).
@@ -31,22 +29,23 @@ fn main() -> Result<(), std::io::Error> {
                 eprintln!("Error: Too short code.");
                 return Ok(());
             }
-            match Color::from_hex(&args[1]) {
-                Ok(color) => color.print_color(),
+            match Color::try_from(args[1].as_ref()) {
+                Ok(color) => print_color(&color),
                 Err(e) => eprintln!("{:#?}", e),
             }
         }
         _ => {
             if &args[1] == "-s" || &args[1] == "--search" {
                 let query = &args[2..args.len()];
-                let names = search_names(query.to_vec());
+                let query: Vec<&str> = query.iter().map(|x| x.as_str()).collect();
+                let names = colorconv::find_all_by_name(query.as_slice());
                 debug!("{:#?}", names);
-                if names.is_empty() {
+                if names.is_none() {
                     println!("No such color name.");
                 } else {
-                    for name in names {
-                        if let Ok(color) = Color::from_name(name.to_string()) {
-                            color.print_color();
+                    for name in names.unwrap() {
+                        if let Ok(color) = Color::try_from(name.as_str()) {
+                            print_color(&color);
                         }
                     }
                 }
@@ -68,8 +67,8 @@ fn main() -> Result<(), std::io::Error> {
                             }
                         }
                         if rgb.len() == 3 {
-                            let color = Color::from_rgb(rgb[0], rgb[1], rgb[2]);
-                            color.print_color();
+                            let color = Color::from([rgb[0], rgb[1], rgb[2]]);
+                            print_color(&color);
                         } else {
                             eprintln!("Error: Invalid input.");
                         }
@@ -85,8 +84,8 @@ fn main() -> Result<(), std::io::Error> {
                         eprintln!("Error: {} => Too short.", arg);
                         continue;
                     }
-                    match Color::from_hex(&arg) {
-                        Ok(color) => color.print_color(),
+                    match Color::try_from(arg.as_str()) {
+                        Ok(color) => print_color(&color),
                         Err(e) => eprintln!("{:#?}", e),
                     }
                 }
@@ -94,25 +93,4 @@ fn main() -> Result<(), std::io::Error> {
         }
     }
     Ok(())
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_from_hex() {
-        let color = Color::from_hex("7CB9E8").unwrap();
-        assert_eq!(color.hex, "7cb9e8".to_string());
-        assert_eq!(color.name, Some("Aero".to_string()));
-        assert_eq!(color.rgb, vec![124, 185, 232]);
-    }
-
-    #[test]
-    fn test_from_rgb() {
-        let color = Color::from_rgb(175, 143, 44);
-        assert_eq!(color.hex, "af8f2c".to_string());
-        assert_eq!(color.name, Some("Alpine".to_string()));
-        assert_eq!(color.rgb, vec![175, 143, 44]);
-    }
 }
