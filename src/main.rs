@@ -2,6 +2,7 @@ mod color;
 
 use colorconv::Color;
 use log::debug;
+use std::str::FromStr;
 
 use crate::color::print_color;
 
@@ -29,13 +30,13 @@ fn main() -> Result<(), std::io::Error> {
                 eprintln!("Error: Too short code.");
                 return Ok(());
             }
-            match Color::try_from(args[1].as_ref()) {
+            match Color::from_str(&args[1]) {
                 Ok(color) => print_color(&color),
                 Err(e) => eprintln!("{:#?}", e),
             }
         }
         _ => {
-            if &args[1] == "-s" || &args[1] == "--search" {
+            if args[1].starts_with("-s") || &args[1] == "--search" {
                 let query = &args[2..args.len()];
                 let query: Vec<&str> = query.iter().map(|x| x.as_str()).collect();
                 let names = colorconv::find_all_by_name(query.as_slice());
@@ -44,7 +45,12 @@ fn main() -> Result<(), std::io::Error> {
                     println!("No such color name.");
                 } else {
                     for name in names.unwrap() {
-                        if let Ok(color) = Color::try_from(name.as_str()) {
+                        if let Ok(color) = Color::from_str(&name) {
+                            if args[1] == "-sd" && color.hsl[2] > 0.5 {
+                                continue;
+                            } else if args[1] == "-sl" && color.hsl[2] < 0.5 {
+                                continue;
+                            }
                             print_color(&color);
                         }
                     }
@@ -84,7 +90,7 @@ fn main() -> Result<(), std::io::Error> {
                         eprintln!("Error: {} => Too short.", arg);
                         continue;
                     }
-                    match Color::try_from(arg.as_str()) {
+                    match Color::from_str(&arg) {
                         Ok(color) => print_color(&color),
                         Err(e) => eprintln!("{:#?}", e),
                     }

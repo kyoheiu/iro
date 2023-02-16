@@ -8,5 +8,5 @@ edition = "2021"
 [dependencies]
 colored = "2.0.0"
 env_logger = "0.9.1"
-colorconv = "0.1.0"
+colorconv = { path = "../colorconv" }
 log = "0.4.17"
