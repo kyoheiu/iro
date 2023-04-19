@@ -122,10 +122,6 @@ pub fn print_color(color: &Color) {
     println!();
 }
 
-fn round_f(n: f64) -> f64 {
-    (n * 100.0).round() / 100.0
-}
-
 fn round_n(n: u8) -> f64 {
     ((n as f64 / 255.0) * 100.0).round() / 100.0
 }

@@ -30,7 +30,9 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "colorconv"
-version = "0.1.0"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e670189a1b8c8c21426868792d5ad153c7f76ea14cf9fb9774d02285d0610cbb"
 dependencies = [
  "hsl",
  "phf",
@@ -83,7 +85,7 @@ checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
 
 [[package]]
 name = "iro"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "colorconv",
  "colored",

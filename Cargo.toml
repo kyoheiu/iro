@@ -1,6 +1,6 @@
 [package]
 name = "iro"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -8,5 +8,5 @@ edition = "2021"
 [dependencies]
 colored = "2.0.0"
 env_logger = "0.9.1"
-colorconv = { path = "../colorconv" }
+colorconv = "0.1.1"
 log = "0.4.17"
