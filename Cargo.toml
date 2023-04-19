@@ -1,5 +1,5 @@
 [package]
-name = "iro"
+name = "iro-cli"
 version = "0.2.1"
 edition = "2021"
 authors = ["Kyohei Uto <im@kyoheiu.dev>"]
@@ -9,6 +9,12 @@ repository = "https://git.sr.ht/~kyoheiu/iro"
 license = "MIT"
 keywords = ["cli", "color"]
 categories = ["command-line-utilities"]
+
+[[bin]]
+name = "iro"
+path = "src/main.rs"
+test = true
+bench = false
 
 [dependencies]
 colored = "2.0.0"
