@@ -2,8 +2,13 @@
 name = "iro"
 version = "0.2.1"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors = ["Kyohei Uto <im@kyoheiu.dev>"]
+description = "a cli to print color information"
+readme = "README.md"
+repository = ""
+license = "MIT"
+keywords = ["cli", "color"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 colored = "2.0.0"
