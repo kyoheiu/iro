@@ -3,7 +3,7 @@
 A CLI tool to print the hex color code, RGB, HSL and color name from color code, RGB, or color name(if exists, according to [jonathantneal/color-names](https://github.com/jonathantneal/color-names)).
 
 ## Installation
-`cargo install iro`
+`cargo install iro-cri`
 
 ## Usage
 ### from color code or rgb
